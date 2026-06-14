@@ -99,9 +99,13 @@ sudo fdisk -l
 
 이제 /dev/sdc2를 마운트 해서 내부를 봅시다. 
 ```bash
-sudo mount /dev/sdc2 /mnt     #/dev/sdc2를 /mnt로 마운트한다.
+#/dev/sdc2를 /mnt로 마운트한다.
+sudo mount /dev/sdc2 /mnt     
+
+# /mnt 내부 확인
+ls /mnt
 ```
-이렇게 되어있을 것 입니다.
+이렇게 되어있을 것 입니다. 만약 아무것도 안뜨면 유서깊은 버그가 발생한 겁니다. "EFI안에 ubuntu, BOOT가 없어요..." 탭으로 넘어가세요
 ```plaintext
 /mnt (외장 SSD의 EFI 파티션)
 └── EFI/
@@ -153,6 +157,15 @@ sudo umount /mnt
 
 ## EFI안에 ubuntu, BOOT가 없어요...
 만약 EFI안에 ubuntu파일 및 BOOT가 없다면 부트로더를 SSD가 아닌현재 컴퓨터 본체의 내장 하드(윈도우 EFI 파티션)에 강제로 심어버린 버그가 발생한 것입니다. 본체 하드에서 부트로더를 탈취해 와야 합니다.
+EFI 조차 없다면 먼저,
+```bash
+# EFI 만들어주기
+sudo mkdir /mnt/EFI
+
+# 마운트 풀기
+sudo umount /mnt
+```
+를 실행 합니다.
 
 ```bash
 # 부트로더 위치 확인
@@ -162,7 +175,7 @@ sudo fdisk -l
 
 자신의 외장 SSD를 찾고, 이름을 확인합니다. 여기서는 /dev/sdc라고 가정합니다. 사람마다 이름이 전부 다르므로 자신의 외장 SSD를 용량 등을 단서로 잘 확인합시다.
 
-추가로 자신의 컴퓨터의 OS가 설치된 디스크를 찾습니다. 여기서는 /dev/sda라고 가정합니다. 물론 사람마다 이름 다르니 잘 확인합시다.
+추가로 자신의 컴퓨터의 OS가 설치된 디스크를 찾습니다. 여기서는 /dev/sda라고 가정합니다. 물론 사람마다 이름 다르니 잘 확인합시다. (이외에도 nvme0n1p2같은 이름도 있습니다.)
 
 ```bash
 # 임시 마운트 폴더 2개 생성
@@ -192,7 +205,7 @@ sudo mkdir -p /mnt/external_efi/EFI/BOOT
 cd /mnt/external_efi/EFI/BOOT/
 
 # 3. 조금 전 복사해 온 ubuntu 폴더의 파일들을 BOOT 폴더로 복사
-sudo cp ../ubuntu/* ./
+sudo cp -r ../ubuntu/* ./
 
 # 4. 안전 부팅(Secure Boot) 환경에서 메인보드가 인식할 수 있도록 shimx64.efi를 BOOTX64.EFI로 복사본 생성
 sudo cp shimx64.efi BOOTX64.EFI
@@ -212,6 +225,8 @@ sudo cp shimx64.efi BOOTX64.EFI
         ├── grubx64.efi   
         ├── shimx64.efi   
         └── mmx64.efi
+
+BOOTX64.csv 파일은 무시하셔도 됩니다.
 ```
 
 ## 마운트 해제 및 재시작 
@@ -222,9 +237,9 @@ cd ~
 sudo umount /mnt/internal_efi
 sudo umount /mnt/external_efi
 ```
-이후 재시작 해서 f2(제조사 마다 다름)을 연타해 바이오스/UEFI화면 진입, SSD로 부팅 하면 우분투 화면이 로딩 될 것입니다.
+이후 다른 컴퓨터에 SSD 꽂고 재시작 해서 f2(제조사 마다 다름)을 연타해 바이오스/UEFI화면 진입, SSD로 부팅 하면 우분투 화면이 로딩 될 것입니다.
 
-## 또 다른 문제
+## 또 다른 문제들
 ### 🔍 증상
 외장 SSD로 부팅을 시도했으나 아래와 같은 검은 에러 화면이 뜨며 멈춤 현상 발생.
 ```bash
