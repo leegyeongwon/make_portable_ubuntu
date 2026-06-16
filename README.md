@@ -294,3 +294,54 @@ nano /etc/fstab
 ```bash
 reboot -f
 ```
+여기까지만 해도 일단 부팅은 됩니다.   
+&nbsp;  
+&nbsp;    
+&nbsp;    
+
+## 안정성 추가 
+이후 본인 SSD의 UUID를 fstab파일에 넣어줍니다. 먼저 터미널을 열고,
+```bash
+sudo blkid
+```
+우분투가 설치된 기기의 UUID를 확인합니다.
+&nbsp;  
+  
+```plaintext
+/dev/sdd3: UUID="a1c2e3gh-ab00-0000-a5a4-a5s5f6d7f8g9" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="a1s2d3f4-a1s2-a1s2-a1s2-a1s2d3f4g5h6"
+```
+와 같이 적혀있습니다. ext4는 우분투의 파일 관리 시스템으로, 윈도우랑 다르니 이걸 단서로 찾아봅시다.  
+&nbsp;  
+   
+그리고 우분투가 설치된 기기의 EFI 파티션 UUID를 확인 합니다.
+&nbsp;  
+  
+```
+/dev/sdd2: UUID="A1A1-B2B2" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="aasdfsadf-asdf-4asd-9asd-asdfasdfasdf"
+```
+
+와 같이 적혀있습니다. 이번에는 TYPE="vfat"을 단서로 찾아봅시다. 또한 위의 UUID경로와 같은 이름(/sdd)을 단서로 찾아봅시다.   
+
+
+```bash
+sudo nano /etc/fstab
+```
+
+텍스트 편집기로 fstab를 엽니다.  
+ssd기기 자체의 UUID는 이미 존재하니, 외장 드라이브 자체 EFI 부트 파티션만 기록해 주면 됩니다.
+
+```plaintext
+# 원래 있던 것
+UUID=a1c2e3gh-ab00-0000-a5a4-a5s5f6d7f8g9 /               ext4    errors=remount-ro 0       1
+
+# 외장 드라이브 자체 EFI 부트 파티션 (/dev/sdd2)
+UUID=A1A1-B2B2                            /boot/efi       vfat    umask=0077      0       2    <-여기
+
+# 아까 주석 처리한 다른 기기의 UUID
+# /boot/efi was on /dev/nvme0n1p2 during installation
+# UUID=1111-1111  /boot/efi       vfat    umask=0077      0       
+```
+
+글자 사이 공백은 1칸이든 여러 칸이든 상관 없습니다.  
+   
+진짜 끝!
