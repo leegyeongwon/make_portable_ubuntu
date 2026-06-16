@@ -106,6 +106,8 @@ sudo mount /dev/sdc2 /mnt
 ls /mnt
 ```
 이렇게 되어있을 것 입니다. 만약 아무것도 안뜨면 유서깊은 버그가 발생한 겁니다. "EFI안에 ubuntu, BOOT가 없어요..." 탭으로 넘어가세요
+
+## CASE1: ubuntu와 BOOT파일이 있어요
 ```plaintext
 /mnt (외장 SSD의 EFI 파티션)
 └── EFI/
@@ -155,7 +157,7 @@ cd ~
 sudo umount /mnt
 ```
 
-## EFI안에 ubuntu, BOOT가 없어요...
+## CASE2: EFI안에 ubuntu, BOOT가 없어요...
 만약 EFI안에 ubuntu파일 및 BOOT가 없다면 부트로더를 SSD가 아닌현재 컴퓨터 본체의 내장 하드(윈도우 EFI 파티션)에 강제로 심어버린 버그가 발생한 것입니다. 본체 하드에서 부트로더를 탈취해 와야 합니다.
 EFI 조차 없다면 먼저,
 ```bash
@@ -341,8 +343,9 @@ UUID=A1A1-B2B2                            /boot/efi       vfat    umask=0077    
 # /boot/efi was on /dev/nvme0n1p2 during installation
 # UUID=1111-1111  /boot/efi       vfat    umask=0077      0       
 ```
-
-글자 사이 공백은 1칸이든 여러 칸이든 상관 없습니다.  
+💡 복사 붙여넣기 말고 반드시 본인의 UUID를 넣으세요!
+글자 사이 공백은 1칸이든 여러 칸이든 상관 없습니다. 
+&nbsp;  
 "ctl+o" -> "enter" -> "ctl+x"로 나오고 재부팅 해봅니다.
 &nbsp;  
 &nbsp;    
