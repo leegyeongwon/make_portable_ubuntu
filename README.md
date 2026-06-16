@@ -335,7 +335,7 @@ ssd기기 자체의 UUID는 이미 존재하니, 외장 드라이브 자체 EFI 
 UUID=a1c2e3gh-ab00-0000-a5a4-a5s5f6d7f8g9 /               ext4    errors=remount-ro 0       1
 
 # 외장 드라이브 자체 EFI 부트 파티션 (/dev/sdd2)
-UUID=A1A1-B2B2                            /boot/efi       vfat    umask=0077      0       2    <-여기
+UUID=A1A1-B2B2                            /boot/efi       vfat    umask=0077      0       1    <-여기
 
 # 아까 주석 처리한 다른 기기의 UUID
 # /boot/efi was on /dev/nvme0n1p2 during installation
