@@ -343,5 +343,8 @@ UUID=A1A1-B2B2                            /boot/efi       vfat    umask=0077    
 ```
 
 글자 사이 공백은 1칸이든 여러 칸이든 상관 없습니다.  
-   
+"ctl+o" -> "enter" -> "ctl+x"로 나오고 재부팅 해봅니다.
+&nbsp;  
+&nbsp;    
+&nbsp;    
 진짜 끝!
