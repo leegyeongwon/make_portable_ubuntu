@@ -105,7 +105,7 @@ sudo mount /dev/sdc2 /mnt
 # /mnt 내부 확인
 ls /mnt
 ```
-이렇게 되어있을 것 입니다. 만약 아무것도 안뜨면 유서깊은 버그가 발생한 겁니다. "EFI안에 ubuntu, BOOT가 없어요..." 탭으로 넘어가세요
+원래라면 ubuntu와 BOOT파일이 있을 것입니다. 만약 아무것도 안뜨면 유서깊은 버그가 발생한 겁니다. "EFI안에 ubuntu, BOOT가 없어요..." 탭으로 넘어가세요
 
 ## CASE1: ubuntu와 BOOT파일이 있어요
 ```plaintext
