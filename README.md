@@ -8,7 +8,7 @@
 - 오리코 썬더볼트 4/3 40Gbps 호환 M.2 NVMe 외장 SSD 케이스 AAGM2-U4
 - SK하이닉스 Gold P31 M.2 NVMe (512GB)
 - 메인보드 Asus B850M Max gaming wifi
-- 128GB USB (8GB도 가능)
+- 128GB USB (최소 8GB도 가능)
 
 # 우분투 OS 설치하기
 ## 준비물
